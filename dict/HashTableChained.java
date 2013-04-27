@@ -23,6 +23,7 @@ public class HashTableChained implements Dictionary {
 	private int buckets;
 	public DList[] table;
 	public int index = 0;
+	private int size = 0;
 
 
 
@@ -88,11 +89,11 @@ public class HashTableChained implements Dictionary {
   int compFunction(int code) {
 	  //System.out.println("testing 8:" + mod(8,8));
 	  //System.out.println("testing 4: " + mod(4,5));
-	  //System.out.println("testing 33: " + mod(10123, 33));
+	  //System.out.println("testing 33: " + mod(10123, 33)); 48611 50513 255977
 	  
-	  int a = 5;
-	  int b = 47;
-	  int p = 108739;
+	  int a = 37;
+	  int b = 48611;
+	  int p =  327553;
 	  //System.out.println("P :" + p);
 	  int result = mod(mod(((a * code) + b), p), buckets);
 	  return result;
@@ -115,13 +116,7 @@ private int mod(int a, int b){
    **/
 
   public int size() {
-	  int counter = 0;
-	  for(int i = 0; i < buckets; i++){
-		  if(table[i] != null){  
-			  counter += table[i].length();
-		  }
-	  }
-    return counter;
+	  return size;
   }
 
   /** 
@@ -148,13 +143,22 @@ private int mod(int a, int b){
    **/
 
   public Entry insert(Object key, Object value) {
+	  System.out.println("in insert");
 	  Entry e = new Entry();
 	  e.key = key;
 	  e.value = value;
 	  int code = key.hashCode();
 	  int index = this.compFunction(code);
 	  table[index].insertBack(e);
+	  size++;
+	  
+	  if(this.size >= buckets){
+		  resize(false);
+	  }
+	  
 	  return e;
+	  
+	  
   }
 
   /** 
@@ -224,7 +228,46 @@ private int mod(int a, int b){
 			 System.out.println("invalid node in remove :(");
 		 }
 	  }
+	  size--;
+	  
+	  if(this.size <= (buckets/4)){
+		  this.resize(true);
+	  }
+	  
 	  return e;
+  }
+  
+  
+  private void resize(boolean smaller){
+	  System.out.println("in resize");
+	  index = 0;
+	  size = 0;
+	  DList[] temp = table;
+	  if(smaller){
+		  buckets = getPrime(buckets/4);
+		    
+	  }
+	  else{
+		  buckets = getPrime(buckets *2);
+	  }
+	  table = new DList[buckets];
+	  
+	  for(int i = 0; i < table.length; i++){
+		  table[i] = new DList();
+	  }
+	  
+	  for(int i = 0; i < temp.length; i++){
+		  try{
+			  DList d = temp[i];
+			  ListNode current = d.front();
+			  while(current.isValidNode()){
+				  this.insert(((Entry) current.item()).key(), ((Entry) current.item()).value());
+				  current = current.next();
+			  }
+		  }
+		  catch(InvalidNodeException e){}
+	  }
+	  
   }
 
   /**
@@ -274,5 +317,76 @@ private int mod(int a, int b){
 	  double problem = Math.pow((1 - 1.0 /buckets),this.size());
 	  return this.size() - buckets + buckets  * problem;
   }
+  
+  public String toString(){
+	  String result = "";
+	  for(int i = 0; i < table.length; i++){
+		  List l = table[i];
+		  ListNode current = l.front();
+		  result += "| ";
+		  try{
+		  while(current.isValidNode()){
+			  result += current.item() + " ";
+		 	  current = current.next();
+		  }
+		 }
+		  catch(InvalidNodeException e){}
+		  result += " |";
+	  }
+	  return result;
+  }
+  
+  public static void main(String[] args){
+//	 HashTableChained h = new HashTableChained(4);
+//	// System.out.println("hi".hashCode());
+//	 System.out.println("size: " + h.size());
+//	 System.out.println("buckets: " + h.buckets);
+//	 System.out.println("Inserting: " + "hi");
+//	 h.insert("hi", 1);
+//	 System.out.println("Inserting: " + "this");
+//	 h.insert("this",2);
+//	 System.out.println("Inserting: " + "is");
+//	 h.insert("is", 3);
+//	 System.out.println("size: " + h.size());
+//
+//	 System.out.println("buckets: " + h.buckets);
+//	 
+//	 System.out.println("Inserting: " + "strange");
+//	 h.insert("strange", 4);
+//	 System.out.println("size: " + h.size());
+//
+//	 System.out.println("buckets: " + h.buckets);
+//	 
+//	 System.out.println("Inserting: " + "am");
+//	 h.insert("am", 5);
+//	 System.out.println("size: " + h.size());
+//
+//	 System.out.println("Inserting: " + "i");
+//	 h.insert("i", 6);
+//	 System.out.println("size: " + h.size());
+//
+//	 System.out.println("Inserting: " + "right");
+//	 h.insert("right", 7);
+//	 System.out.println("size: " + h.size());
+//
+//	 //System.out.println("size: " + h.size());
+//
+//	 System.out.println("buckets: " + h.buckets);
+//	 System.out.println("expected: " + h.expectedCollisions());
+//	 System.out.println("h: " + h);
+//	 
+//	 System.out.println("Removing: " + "right");
+//	 h.remove("right");
+//	 System.out.println("size: " + h.size());
+//	 System.out.println("expected: " + h.expectedCollisions());
+//	 System.out.println("h: " + h);
+//	 
+//	 System.out.println("Removing: " + "am");
+//	 h.remove("am");
+//	 System.out.println("size: " + h.size());
+//	 System.out.println("expected: " + h.expectedCollisions());
+//	 System.out.println("h: " + h);
+//	 
+//	 
+  }
 }
-
