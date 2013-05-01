@@ -1,0 +1,53 @@
+package edge;
+public class Edge {
+  int weight;
+	Object vertex1;
+	Object vertex2;
+	boolean visited;
+	
+	public Edge(Object o1, Object o2, int weight){
+		this.vertex1 = o1;
+		this.vertex2 = o2;
+		this.weight = weight;
+		this.visited = false;
+	}
+	
+	/**
+	 * Method checks whether this edge and another are merely inverses of each other, e.g. the same edge but backwards.
+	 * The undirected graph does not distinguish between the two.
+	 * @param edge2 edge in question to compare
+	 * @return true if same edge as this, false if different edges.
+	 */
+	
+	public boolean equivalent(Edge edge2){
+		if(this.vertex1 == edge2.vertex2 && this.vertex2 == edge2.vertex1 && this.weight == edge2.weight){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
+	/**
+	 * 
+	 * @return object in one of the vertices
+	 */
+	public Object vertex1(){
+		return vertex1;
+	}
+	
+	/**
+	 * @return object in other vertex
+	 */
+	public Object vertex2(){
+		return vertex2;
+	}
+	
+	/**
+	 * 
+	 * @return returns weight of the edge
+	 */
+	public int weight(){
+		return this.weight;
+	}
+}
