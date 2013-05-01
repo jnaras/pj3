@@ -1,47 +1,56 @@
-//Vertex.java
-
 package graph;
-import list.*; 
+import list.*;
 
-class Vertex {
-    protected Object vertexValue;
-    protected DList vertexAdjacencyList;
-    protected int degree;
-    protected ListNode node;
+class Edge {
+    protected Vertex v1;
+    protected Vertex v2;
+    protected int weight;
+    protected Edge partner;
+    protected ListNode node; //keeps track of which node it's inserted into in the adjacency list
+     
     
-    Vertex(){
-        vertexValue = null;
-        vertexAdjacencyList = new DList();
-        node = null;
-    }
- 
-    Vertex(Object v){
-        vertexValue = v;
-        vertexAdjacencyList = new DList();
-        node = null;
-    }
-   
-    Object getVertex(){
-        return vertexValue;
-    }
-    
-    int getDegree(){
-        return vertexAdjacencyList.length();
+    //two constructors
+    Edge(Vertex x, Vertex y, int w){
+        weight = w;
+        v1 = x;
+        v2 = y;
+        if(v1.equals(v2)){
+            this.partner = this;
+        }else{
+            this.partner = new Edge(v2, v1, w, this);
+        }
+        v1.insertEdge(this);
+        node = v1.getAdjacencyList().back();
     }
     
-    DList getAdjacencyList(){
-       return vertexAdjacencyList;
+    Edge(Vertex x, Vertex y, int w, Edge partner){
+        weight = w;
+        v1 = x;
+        v2 = y;
+        this.partner = partner;
+        v1.insertEdge(this);
+        node = v1.getAdjacencyList().back();
     }
     
-    void insertEdge(Edge e){
-        this.vertexAdjacencyList.insertBack(e);
+    Vertex getV1(){
+        return v1;
+    }
+    
+    Vertex getV2(){
+        return v2;
+    }
+    
+    int getWeight(){
+        return weight;
+    }
+    
+    Edge getPartner(){
+        return partner;
     }
     
     ListNode getNode(){
         return node;
     }
+
     
-    void setNode(ListNode d){
-        node = d;
-    }
-}   
+} 
