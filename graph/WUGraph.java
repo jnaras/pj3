@@ -12,7 +12,6 @@ public class WUGraph {
     
     private int numberofvertices;
     private int numberofedges;
-    //private int[] edgesAdjacencyList;
     private HashTableChained edgeHashTable;
     public HashTableChained vertexHashTable;
     private DList vertexList;
@@ -104,33 +103,20 @@ public class WUGraph {
 * Running time: O(d), where d is the degree of "vertex".
 */
   public void removeVertex(Object vertex){
-      Entry t = vertexHashTable.remove(vertex);
+      Entry t = vertexHashTable.find(vertex);
+      
       if(t == null){
           return;
       }
-      Vertex v = (Vertex) t.value(); //removing from hash table
+      Vertex v = (Vertex) t.value(); 
       
       ListNode current = v.getAdjacencyList().front();
       ListNode next;
       while(current.isValidNode()){
           try{
               Edge e = (Edge)current.item();
-              //Edge p = e.getPartner();
               next = current.next();
-              //Vertex v2 = e.getV2();
-              //v.removeEdge(e);
-              //if(!v2.equals(v)){
-              //v2.removeEdge(p);
-              //}
-              if(e.getPartner().equals(e)){
-                  v.removeEdge(e);
-            	  numberofedges--;
-              }
-              //v.removeEdge(e);
-              //numberofedges--;
-              else{
-            	  this.removeEdge(e.getV1().vertexValue, e.getV2().vertexValue);
-              }
+              this.removeEdge(e.getV1().vertexValue, e.getV2().vertexValue);
               current = next;
           }
           catch(InvalidNodeException e){
@@ -143,7 +129,7 @@ public class WUGraph {
       catch(InvalidNodeException e){
           e.printStackTrace();
       }
- 
+      t = vertexHashTable.remove(vertex);
       numberofvertices--;
 
   }
@@ -267,17 +253,9 @@ public class WUGraph {
           Edge p = e.getPartner();
           u1.removeEdge(e);
           
-          //try{
-            //e.getNode().remove();
             if(!v.equals(u)){
-                //p.getNode().remove();
                 v1.removeEdge(p);
-                //numberofedges--;
             }
-          //}
-          //catch(InvalidNodeException n){
-          //    n.printStackTrace();
-          //}
           numberofedges--;
       }
   }
@@ -290,22 +268,15 @@ public class WUGraph {
 * Running time: O(1).
 */
   public boolean isEdge(Object u, Object v){
-	  //System.out.println("u: " + u + " v: " + v);
       VertexPair newvp = new VertexPair(u,v);
       
       if(vertexHashTable.find(u) == null){
-    	  //System.out.println("u isn't valid");
     	  return false;
       }
       if(vertexHashTable.find(v) == null){
-    	  //System.out.println("v isn't valid");
     	  return false;
       }
-      //System.out.println("edgeHashTable: " + edgeHashTable.toString());
-      //System.out.println("newvp" + newvp);
-      //System.out.println("edgeHashTable.find(newvp): " + edgeHashTable.find(newvp));
       if(edgeHashTable.find(newvp)!=null){
-    	  //System.out.println("apparently everything is valid");
           return true;
       }
       return false;
