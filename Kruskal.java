@@ -49,7 +49,7 @@ public class Kruskal {
 		  }
 	  }
 	  
-	  mergeSort(edgeList); //how do you use the weights as keys instead of sorting the Edge objects themselves?
+	  mergeSort(edgeList); 
 	  
 	  
 	  HashTableChained h = new HashTableChained(t.vertexCount());
@@ -59,12 +59,12 @@ public class Kruskal {
 	  
 	  DisjointSets d = new DisjointSets(t.vertexCount());
 	  
-	  for(int q = 1; q <= edgeList.size(); q++){
-		  int minCode1 = (int) h.find(((KEdge) edgeList.nth(q)).vertex1()).value();
+	  for(int q = 1; q <= edgeList.size(); q++){ //for every edge
+		  int minCode1 = (int) h.find(((KEdge) edgeList.nth(q)).vertex1()).value(); //look up in the hash table
 		  int minCode2 = (int) h.find(((KEdge) edgeList.nth(q)).vertex2()).value();
-		  if(d.find(minCode1) != d.find(minCode2)){
-			  t.addEdge(((KEdge) edgeList.nth(q)).vertex1(), ((KEdge) edgeList.nth(q)).vertex2(), ((KEdge) edgeList.nth(q)).weight());
-			  d.union(d.find(minCode1),  d.find(minCode2));
+		  if(d.find(minCode1) != d.find(minCode2)){ //if not in the same set
+			  t.addEdge(((KEdge) edgeList.nth(q)).vertex1(), ((KEdge) edgeList.nth(q)).vertex2(), ((KEdge) edgeList.nth(q)).weight()); //add the edge to the min spanning graph
+			  d.union(d.find(minCode1),  d.find(minCode2)); //then union the sets
 		  }
 	  }
 	  
@@ -111,7 +111,7 @@ public class Kruskal {
 		 LinkedQueue mergedQueue = new LinkedQueue();
 		 try {
 			 while(!q1.isEmpty() && !q2.isEmpty()){
-				if(((Comparable) ((KEdge) q2.front()).weight()).compareTo(((KEdge) q1.front()).weight()) < 0){
+				if(((Comparable) ((KEdge) q2.front()).weight()).compareTo(((KEdge) q1.front()).weight()) < 0){ //sort by weight of edge
 					 mergedQueue.enqueue(q2.front());
 					 q2.dequeue();
 				 }
