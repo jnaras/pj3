@@ -1,7 +1,7 @@
 /* Kruskal.java */
 
 import dict.*;
-import edge.*;
+import kEdge.*;
 import graph.*;
 import set.*;
 import list.*;
@@ -19,7 +19,7 @@ public class Kruskal {
    */
   public static WUGraph minSpanTree(WUGraph g){
   
-    WUGraph t = new WUGraph(); 
+	  WUGraph t = new WUGraph(); 
 	  Object[] gVertices = g.getVertices();
 	  
 	  for(int i = 0; i < gVertices.length; i++){ // for all the vertices in the graph
@@ -35,10 +35,10 @@ public class Kruskal {
 			  Object o2 = g.getNeighbors(g.getVertices()[n]).neighborList[m];
 			  int weight =  g.getNeighbors(g.getVertices()[n]).weightList[m];
 					
-			  Edge current = new Edge(o1, o2, weight);
+			  KEdge current = new KEdge(o1, o2, weight);
 			  boolean duplicate = false;
 			  for(int c = 1; c <= edgeList.size(); c++){ //go through the linked queue
-				   if(current.equivalent((Edge) edgeList.nth(c))){ //check if this current edge is already in the queue in reversed form
+				   if(current.equivalent((KEdge) edgeList.nth(c))){ //check if this current edge is already in the queue in reversed form
 					   duplicate = true;
 					   break;
 				   }
@@ -60,10 +60,10 @@ public class Kruskal {
 	  DisjointSets d = new DisjointSets(t.vertexCount());
 	  
 	  for(int q = 1; q <= edgeList.size(); q++){
-		  int minCode1 = (int) h.find(((Edge) edgeList.nth(q)).vertex1()).value();
-		  int minCode2 = (int) h.find(((Edge) edgeList.nth(q)).vertex2()).value();
+		  int minCode1 = (int) h.find(((KEdge) edgeList.nth(q)).vertex1()).value();
+		  int minCode2 = (int) h.find(((KEdge) edgeList.nth(q)).vertex2()).value();
 		  if(d.find(minCode1) != d.find(minCode2)){
-			  t.addEdge(((Edge) edgeList.nth(q)).vertex1(), ((Edge) edgeList.nth(q)).vertex2(), ((Edge) edgeList.nth(q)).weight());
+			  t.addEdge(((KEdge) edgeList.nth(q)).vertex1(), ((KEdge) edgeList.nth(q)).vertex2(), ((KEdge) edgeList.nth(q)).weight());
 			  d.union(d.find(minCode1),  d.find(minCode2));
 		  }
 	  }
@@ -111,7 +111,7 @@ public class Kruskal {
 		 LinkedQueue mergedQueue = new LinkedQueue();
 		 try {
 			 while(!q1.isEmpty() && !q2.isEmpty()){
-				if(((Comparable) ((Edge) q2.front()).weight()).compareTo(((Edge) q1.front()).weight()) < 0){
+				if(((Comparable) ((KEdge) q2.front()).weight()).compareTo(((KEdge) q1.front()).weight()) < 0){
 					 mergedQueue.enqueue(q2.front());
 					 q2.dequeue();
 				 }
