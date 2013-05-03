@@ -1,5 +1,8 @@
 package kEdge;
-
+/*
+* This is the KEdge class used to store information in Kruskal.java. Each KEdge keeps track of 
+* its weight, vertex1, vertex2, and a visited flag.
+*/
 
 public class KEdge {
 	int weight;
@@ -8,6 +11,10 @@ public class KEdge {
 	boolean visited;
 	
 	
+	/**
+	* The constructor takes in two objects to be vertices and a weight. Each KEdge is not visited
+	* when it is first created.
+	*/
 	public KEdge(Object o1, Object o2, int weight) {
 		this.vertex1 = o1;
 		this.vertex2 = o2;
@@ -21,7 +28,6 @@ public class KEdge {
 	 * @param edge2 edge in question to compare
 	 * @return true if same edge as this, false if different edges.
 	 */
-	
 	public boolean equivalent(KEdge edge2){
 		if(this.vertex1 == edge2.vertex2 && this.vertex2 == edge2.vertex1 && this.weight == edge2.weight){
 			return true;
@@ -32,7 +38,7 @@ public class KEdge {
 	}
 	
 	/**
-	 * 
+	 * vertex1()
 	 * @return object in one of the vertices
 	 */
 	public Object vertex1(){
@@ -40,6 +46,7 @@ public class KEdge {
 	}
 	
 	/**
+	 * vertex2()
 	 * @return object in other vertex
 	 */
 	public Object vertex2(){
@@ -47,7 +54,7 @@ public class KEdge {
 	}
 	
 	/**
-	 * 
+	 * weight()
 	 * @return returns weight of the edge
 	 */
 	public int weight(){
