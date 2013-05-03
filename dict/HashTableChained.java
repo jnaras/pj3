@@ -143,7 +143,6 @@ private int mod(int a, int b){
    **/
 
   public Entry insert(Object key, Object value) {
-	  System.out.println("in insert");
 	  Entry e = new Entry();
 	  e.key = key;
 	  e.value = value;
@@ -189,7 +188,7 @@ private int mod(int a, int b){
 			  current = (DListNode) current.next();
 		  }
 		 catch (InvalidNodeException g){
-			 System.out.println("invalid node in find :(");
+			g.printStackTrace();
 		 }
 	  }
 	  return e;
@@ -225,7 +224,7 @@ private int mod(int a, int b){
 			  current = (DListNode) current.next();
 		  }
 		 catch (InvalidNodeException g){
-			 System.out.println("invalid node in remove :(");
+			g.printStackTrace();
 		 }
 	  }
 	  size--;
@@ -239,7 +238,6 @@ private int mod(int a, int b){
   
   
   private void resize(boolean smaller){
-	  System.out.println("in resize");
 	  index = 0;
 	  size = 0;
 	  DList[] temp = table;
@@ -280,34 +278,6 @@ private int mod(int a, int b){
 	  }
   }
   
-  /**
-   * Purely for testing purposes only. This tests the number of collisions
-   * in the hash table versus the expected value
-   */
-  public int countCollisions(){
-	  //String histograph = "";
-	  int count = 0;
-	  int maxcount = 0;
-	  int max = 0;
-	  for(int i = 0; i < buckets; i++){
-		  //histograph = histograph + i + ":";
-		  DList d = table[i];
-		  if(d.length() >= 2){
-				count += d.length()-1;
-				maxcount += d.length()-1;
-		  }
-		  //histograph = histograph + "\n";
-		  if(max < maxcount){
-			  index = i;
-			  max = maxcount;
-			  maxcount = 0;
-		  }
-	  }
-	  //System.out.println(histograph);
-	  System.out.println("max: " + max);
-	  System.out.println("index: " + index);
-	return count;
-  }
   
   /**
    * Purely for testing purposes only. This gives the expected number of collisions
@@ -336,57 +306,5 @@ private int mod(int a, int b){
 	  return result;
   }
   
-  public static void main(String[] args){
-//	 HashTableChained h = new HashTableChained(4);
-//	// System.out.println("hi".hashCode());
-//	 System.out.println("size: " + h.size());
-//	 System.out.println("buckets: " + h.buckets);
-//	 System.out.println("Inserting: " + "hi");
-//	 h.insert("hi", 1);
-//	 System.out.println("Inserting: " + "this");
-//	 h.insert("this",2);
-//	 System.out.println("Inserting: " + "is");
-//	 h.insert("is", 3);
-//	 System.out.println("size: " + h.size());
-//
-//	 System.out.println("buckets: " + h.buckets);
-//	 
-//	 System.out.println("Inserting: " + "strange");
-//	 h.insert("strange", 4);
-//	 System.out.println("size: " + h.size());
-//
-//	 System.out.println("buckets: " + h.buckets);
-//	 
-//	 System.out.println("Inserting: " + "am");
-//	 h.insert("am", 5);
-//	 System.out.println("size: " + h.size());
-//
-//	 System.out.println("Inserting: " + "i");
-//	 h.insert("i", 6);
-//	 System.out.println("size: " + h.size());
-//
-//	 System.out.println("Inserting: " + "right");
-//	 h.insert("right", 7);
-//	 System.out.println("size: " + h.size());
-//
-//	 //System.out.println("size: " + h.size());
-//
-//	 System.out.println("buckets: " + h.buckets);
-//	 System.out.println("expected: " + h.expectedCollisions());
-//	 System.out.println("h: " + h);
-//	 
-//	 System.out.println("Removing: " + "right");
-//	 h.remove("right");
-//	 System.out.println("size: " + h.size());
-//	 System.out.println("expected: " + h.expectedCollisions());
-//	 System.out.println("h: " + h);
-//	 
-//	 System.out.println("Removing: " + "am");
-//	 h.remove("am");
-//	 System.out.println("size: " + h.size());
-//	 System.out.println("expected: " + h.expectedCollisions());
-//	 System.out.println("h: " + h);
-//	 
-//	 
-  }
+ 
 }
