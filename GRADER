@@ -44,4 +44,12 @@ their object fields to the array. This takes O(|V|) time because looking up fiel
 indices of arrays takes only O(1) time and we go through the loop |V| times, where |V| is the number of vertices in a
 WUGraph.
 
-Design Decisions made in Kruskal.java
+Design Decisions made in Kruskal.java:
+
+First, a copy of all the vertices in the original WUGraph was made into a new WUGraph simply by looping through all of the existing vertices and adding them to the new one. 
+
+Then, in order to get all of the edges from the graph and sort them, a LinkedQueue data structure was used. This data structure was used because it served all of the purposes we required, and could be implemented with existing code from previous assignments. Furthermore, to create this list, a new class of edges, called KEdge, was created. KEdge keeps track of the two objects used as  vertices, weight of the edge, but also contains a method called equivalent(). equivalent() is used later on to determine whether the edge AB is simply BA, because it is an undirected graph. It returns a boolean that indicates whether the two are duplicates.
+
+After each unique edge was used to create a KEdge and added to a LinkedQueue, the LinkedQueue is sorted using a mergesort algorithm.
+
+Finally, a hash table of the vertices and a disjoint set of the edges are created. These are used to add the individual edges. The disjoint set is unioned each time a new edge is added, after checking whether there is an intersection between each edge and current set. This makes it so that cycles/loops are not created within the new WUGraph. The new WUGraph is returned at the end.
