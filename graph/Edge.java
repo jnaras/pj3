@@ -3,7 +3,8 @@ import list.*;
 
 /*
 * The Edge class represents our internal representation of an Edge object.
-* An edge object keeps track of its two vertices, its weight and its partner edge.
+* An edge object keeps track of its two vertices, its weight, its partner edge, 
+* and which node it's inserted into in the adjacency list
 * All its fields are protected.
 */
 class Edge {
@@ -11,18 +12,19 @@ class Edge {
     protected Vertex v2;
     protected int weight;
     protected Edge partner;
-    protected ListNode node; //keeps track of which node it's inserted into in the adjacency list
+    protected ListNode node; 
      
     
     /* Edge has two constructors*/
 
    /* First constructor takes two vertices and a weight as input
+    * In this constructor, the edge is created and then constructs
+    * its partner edge if its parter is not itself.
     * @param Vertex x is the first vertex.
     * @param Vertex y is the second vertex.
     * @param integer representing the weight of the edge.
     * @return Edge constructed with appropriate end points and weight.
     */
-    
     Edge(Vertex x, Vertex y, int w){
         weight = w;
         v1 = x;
@@ -54,7 +56,8 @@ class Edge {
     }
     
     /*
-     * get V1() returns the first vertex of an edge.
+     * get V1() returns the first Vertex of an edge. The Vertex returned
+     * is the object in Vertex.java.
      * @return Vertex representing the first vertex of the given edge.
      */
     Vertex getV1(){
@@ -85,6 +88,11 @@ class Edge {
         return partner;
     }
     
+    /*
+    * getNode() returns the ListNode in a vertex's adjacency list 
+    * that holds "this" edge. This makes it faster to remove an edge.
+    * @return ListNode that holds "this" edge as its item.
+    */
     ListNode getNode(){
         return node;
     }
