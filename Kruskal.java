@@ -60,8 +60,8 @@ public class Kruskal {
 	  DisjointSets d = new DisjointSets(t.vertexCount());
 	  
 	  for(int q = 1; q <= edgeList.size(); q++){ //for every edge
-		  int minCode1 = (int) h.find(((KEdge) edgeList.nth(q)).vertex1()).value(); //look up in the hash table
-		  int minCode2 = (int) h.find(((KEdge) edgeList.nth(q)).vertex2()).value();
+		  int minCode1 = (Integer) h.find(((KEdge) edgeList.nth(q)).vertex1()).value(); //look up in the hash table
+		  int minCode2 = (Integer) h.find(((KEdge) edgeList.nth(q)).vertex2()).value();
 		  if(d.find(minCode1) != d.find(minCode2)){ //if not in the same set
 			  t.addEdge(((KEdge) edgeList.nth(q)).vertex1(), ((KEdge) edgeList.nth(q)).vertex2(), ((KEdge) edgeList.nth(q)).weight()); //add the edge to the min spanning graph
 			  d.union(d.find(minCode1),  d.find(minCode2)); //then union the sets
