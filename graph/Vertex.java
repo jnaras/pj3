@@ -93,12 +93,12 @@ class Vertex {
     		n.printStackTrace();
     	}
     }
+    
     /*
     * getNode returns the ListNode node that holds the vertex in the vertexList in WUGraph.
     * This allows remove vertex to happen faster.
     * @return ListNode whose item is "this" vertex.
     */
-    
     ListNode getNode(){
         return node;
     }
@@ -106,8 +106,7 @@ class Vertex {
     /*
     * setNode takes in a ListNode and sets "this" vertex's node to be that ListNode.
     * @param d is the node that "this" vertex belongs to.
-    */ 
-    
+    */  
     void setNode(ListNode d){
         node = d;
     }
