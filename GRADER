@@ -1,24 +1,47 @@
-Design Decisions made in WUGraph.java
+                                                  GRADER
 
-In order to represent Vertices and Edges in our graph, we created our own Vertex and Java classes.  These are internal representations that are hidden from the application while providing it with efficient functionality.
+Name of submitting student: Jaya Narasimhan
+Login of submitting student: cs61b-mc
 
-Decision to remove "half-edges":
-Since (u, v) appears in two lists, we use two nodes to represent (u, v) - one in u's list, and one in v's list. Each of these nodes is a "half-edge," and each is the other's "partner." We chose to remove half edges because it makes the process of removing edges faster.
+Name of second student: Weina Chen
+Login of second student: cs61b-md
+
+Name of third student: Sangeetha Alagappan
+Login of third student: cs61b-abk
+
+
+Design Decisions made in WUGraph.java:
+
+In order to represent Vertices and Edges in our graph, we created our own Vertex and Edge classes. 
+These are internal representations that are hidden from the application while providing it with efficient functionality.
+WUGraph contains two hash tables--one that maps outside vertex objects to our internal Vertex objects and one that maps
+VertexPairs to our internal Edge class. It also contains a linked list of our internal Vertex objects that represent 
+all the vertices in the graph.
+Vertex contains a linked-list that keeps track of all the edges incident to it.Vertex also keeps track of which external
+object it is suppose to represent in the value field.
+Edge contains a field for a partner edge, which means that each edge object is really a half edge.
+
+Decision to use "half-edges":
+Since (u, v) appears in two lists, we use two nodes to represent (u, v) - one in u's list, and one in v's list. 
+Each of these nodes is a "half-edge," and each is the other's "partner." We chose to use half edges because it 
+makes the process of removing edges faster.
 
 Design Element - removeVertex():
-
-
-
-
-
+In order to remove a vertex in O(d) time, we made each vertex carry a field that pointed to the ListNode it was held
+in in the vertexList field of WUGraph. Similarly, we made each edge carry a field that pointed to the ListNode it was
+held in in the adjacency list of one of the vertices it connects. Because the ListNode class has a remove() method that 
+manipulates the pointers of that ListNode to remove itself from the list it's in, removing the vertex from the list of 
+vertices took O(1). In this way, we were also able to loop through all of the edges incident to the vertex we were removing 
+and remove each of the edges and the edges' partners in O(1) time. This implies that the whole process is in O(d) time,
+where d is the number of edges incident to the vertex we were removing. We also had to remove the vertex from the 
+vertex hash table, which takes O(1) because it's in a hash table. In this way, the entire method is in O(d) time.
 
 
 Design Element - getVertices():
-
-
-
-
-
-
+In WUGraph, we maintained a doubly-linked list that contained our internal Vertex objects that were part of the WUGraph.
+To create an array of the objects these vertices contained, we looped through all the internal vertex objects and added
+their object fields to the array. This takes O(|V|) time because looking up fields and adding objects to specific 
+indices of arrays takes only O(1) time and we go through the loop |V| times, where |V| is the number of vertices in a
+WUGraph.
 
 Design Decisions made in Kruskal.java
