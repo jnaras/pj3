@@ -64,7 +64,6 @@ public class WUGraph {
       Object[] result = new Object[numberofvertices];
       int index = 0;
       ListNode current = vertexList.front();
-      
       while(current.isValidNode()){
           try{
               result[index] = ((Vertex) current.item()).getVertex();
@@ -104,14 +103,12 @@ public class WUGraph {
 */
   public void removeVertex(Object vertex){
       Entry t = vertexHashTable.find(vertex);
-      
       if(t == null){
           return;
       }
       Vertex v = (Vertex) t.value(); 
       ListNode current = v.getAdjacencyList().front();
       ListNode next;
-      
       while(current.isValidNode()){
           try{
               Edge e = (Edge)current.item();
@@ -184,17 +181,14 @@ public class WUGraph {
   public Neighbors getNeighbors(Object vertex){
 	  Vertex v = (Vertex) vertexHashTable.find(vertex).value();
 	  if (!isVertex(vertex)){
-	      return null;
-	      
+	      return null;   
 	  } else if(v.degree==0){
-	      return null;
-	      
+	      return null;   
 	  } else{
 	      Neighbors newNeighbors = new Neighbors();
 	      newNeighbors.neighborList = new Object[v.degree];
 	      newNeighbors.weightList = new int[v.degree];
 	      ListNode currentnode = v.vertexAdjacencyList.front();
-	      
 	      for (int index=0; index<v.vertexAdjacencyList.length(); index++){
 	          try{
 	        	Object u = ((Edge)currentnode.item()).getV2().getVertex();
@@ -221,11 +215,9 @@ public class WUGraph {
   public void addEdge(Object u, Object v, int weight){
       VertexPair newvertexpair = new VertexPair(u,v);
       if (isEdge(u,v)){
-          ((Edge)edgeHashTable.find(newvertexpair).value()).weight = weight;
-          
+          ((Edge)edgeHashTable.find(newvertexpair).value()).weight = weight;   
       } else if(!isVertex(u) || !isVertex(v)){
-          return;
-          
+          return;    
       } else{
           Vertex x = (Vertex) vertexHashTable.find(u).value();
           Vertex y = (Vertex) vertexHashTable.find(v).value();
@@ -250,14 +242,12 @@ public class WUGraph {
           VertexPair nvp1 = new VertexPair(u,v);
           Vertex v1 = (Vertex) vertexHashTable.find(v).value();
           Vertex u1 = (Vertex) vertexHashTable.find(u).value();
-          
           Edge e = (Edge) edgeHashTable.remove(nvp1).value();
           Edge p = e.getPartner();
           u1.removeEdge(e);
-          
-            if(!v.equals(u)){
-                v1.removeEdge(p);
-            }
+          if(!v.equals(u)){
+        	v1.removeEdge(p);
+          }
           numberofedges--;
       }
   }
@@ -271,7 +261,6 @@ public class WUGraph {
 */
   public boolean isEdge(Object u, Object v){
       VertexPair newvp = new VertexPair(u,v);
-      
       if(vertexHashTable.find(u) == null){
     	  return false;
       }
