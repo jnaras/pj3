@@ -3,7 +3,8 @@ import list.*;
 
 /*
 * The Edge class represents our internal representation of an Edge object.
-* An edge object keeps track of its two vertices, its weight and its partner edge.
+* An edge object keeps track of its two vertices, its weight, its partner edge
+* and which node it's inserted into in the adjacency list of the first vertex v1.
 * All its fields are protected.
 * Since (u, v) appears in two lists, two nodes represent (u, v) - Each of these 
 * nodes is a "half-edge," and each is the other's "partner." 
@@ -13,7 +14,7 @@ class Edge {
     protected Vertex v2;
     protected int weight;
     protected Edge partner;
-    protected ListNode node; //keeps track of which node it's inserted into in the adjacency list
+    protected ListNode node;
      
     
     /* Edge has two constructors*/
@@ -87,6 +88,11 @@ class Edge {
         return partner;
     }
     
+    /*
+    * getNode() returns the ListNode that holds "this" edge
+    * as its item in v1's adjacency list.
+    * @return ListNode that this edge is inserted into.
+    */
     ListNode getNode(){
         return node;
     }
