@@ -1,6 +1,11 @@
 Design Decisions made in WUGraph.java
 
-Design Element 1 - removeVertex():
+In order to represent Vertices and Edges in our graph, we created our own Vertex and Java classes.  These are internal representations that are hidden from the application while providing it with efficient functionality.
+
+Decision to remove "half-edges":
+Since (u, v) appears in two lists, we use two nodes to represent (u, v) - one in u's list, and one in v's list. Each of these nodes is a "half-edge," and each is the other's "partner." We chose to remove half edges because it makes the process of removing edges faster.
+
+Design Element - removeVertex():
 
 
 
@@ -8,7 +13,7 @@ Design Element 1 - removeVertex():
 
 
 
-Design Element 2 - getVertices():
+Design Element - getVertices():
 
 
 
