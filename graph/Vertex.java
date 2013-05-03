@@ -68,7 +68,7 @@ class Vertex {
     }
 
     /*
-    * insertEdge takens an edge as an input, an inserts it into the graph, 
+    * insertEdge takes an edge as an input, an inserts it into the graph, 
     * incrementing the degree of the vertex and adding the edge to the vertex's
     *  adjacency list.
     * @param Edge e - the edge that is being inserted into the graph.
@@ -79,7 +79,9 @@ class Vertex {
     }
     
 /*
-* 
+* removeEdge takes an edge e as an input and removes that edge from that
+* the graph, decreasing the degree of the vertex.
+* @param Edge e that needs to be removed from the graph.
 */
     void removeEdge(Edge e){
         try{
